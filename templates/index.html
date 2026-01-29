@@ -1,0 +1,164 @@
+{% extends "base.html" %}}
+
+{% block body %}
+
+<div class="header-section">
+  <div>
+    <h1 class ="title-group">Network Devices</h1>
+    <p class="subtitle">Scanning network: <strong>{{ network }}</strong></p>
+  </div>
+  <div class="buttons-section"> 
+    <a style="text-decoration: none;" href="/whitelist"><button class="btn-whitelist">Whitelist</button></a>
+    <form action="{{ url_for('scan_network') }}" method="post">
+      <button type="submit" class="btn-add">
+        Start Scan
+      </button> 
+    </form> 
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="card stat-card">
+    <div>
+      <h4>Devices</h4><span>{{ total_devices }}</span>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5672e3">
+      <path d="M480-540ZM80-160v-80h400v80H80Zm120-120q-33 0-56.5-23.5T120-360v-360q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720H200v360h280v80H200Zm600 40v-320H640v320h160Zm-180 80q-25 0-42.5-17.5T560-220v-360q0-25 17.5-42.5T620-640h200q25 0 42.5 17.5T880-580v360q0 25-17.5 42.5T820-160H620Zm100-300q13 0 21.5-9t8.5-21q0-13-8.5-21.5T720-520q-12 0-21 8.5t-9 21.5q0 12 9 21t21 9Zm0 60Z"/>
+    </svg>
+  </div>
+  <div class="card stat-card">
+    <div>
+      <h4>Online</h4><span>{{ online_devices }}</span>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5672e3">
+      <path d="m437-398 227-226-57-57-170 170-85-85-56 56 141 142ZM40-120v-80h880v80H40Zm120-120q-33 0-56.5-23.5T80-320v-440q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v440q0 33-23.5 56.5T800-240H160Zm0-80h640v-440H160v440Zm0 0v-440 440Z"/>
+    </svg>
+  </div>
+  <div class="card stat-card">
+    <div>
+      <h4>Offline</h4><span>{{ offline_devices }}</span>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5672e3">
+      <path d="m828-246-74-74h46v-440H314l-80-80h566q33 0 56.5 23.5T880-760v440q0 26-14.5 45.5T828-246Zm-8 218-92-92H40v-80h607l-40-40H160q-33 0-56.5-23.5T80-320v-446l-52-54 56-56L876-84l-56 56ZM526-320 160-687v367h366Zm8-220Zm-191 36Zm157-70 107-107 57 57-107 107-57-57Z"/>
+    </svg>
+  </div>
+  <div class="card stat-card">
+    <div>
+      <h4>Unrecognized</h4><span>{{ total_unknown }}</span>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5672e3">
+      <path d="M170-400h136q-3-20-4.5-40t-1.5-40q0-20 1.5-40t4.5-40H170q-5 20-7.5 40t-2.5 40q0 20 2.5 40t7.5 40Zm34-240h118q9-37 22.5-72.5T376-782q-55 18-99 54.5T204-640Zm172 462q-18-34-31.5-69.5T322-320H204q29 51 73 87.5t99 54.5Zm28-462h152q-12-43-31-82.5T480-798q-26 36-45 75.5T404-640Zm234 0h118q-29-51-73-87.5T584-782q18 34 31.5 69.5T638-640ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q146 0 254.5 91.5T871-560H386q-3 20-4.5 40t-1.5 40q0 20 1.5 40t4.5 40h174v80H404q12 43 31 82.5t45 75.5q18 0 35.5-2t35.5-4l17 78q-23 5-44 7.5T480-80Zm286 0q-17 0-29.5-12.5T724-122q0-17 12.5-29.5T766-164q17 0 29.5 12.5T808-122q0 17-12.5 29.5T766-80Zm-30-128q0-46 7.5-63t42.5-47q14-14 24-27.5t10-30.5q0-18-13.5-32T766-422q-27 0-41 15.5T706-374l-54-22q12-35 41-59.5t73-24.5q47 0 80.5 25.5T880-378q0 24-12 45t-30 39q-30 30-36 42t-6 44h-60Z"/>
+    </svg>
+  </div>
+  <div class="card stat-card">
+    <div>
+      <h4>Blocked</h4><span>{{ blocked_devices }}</span>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5672e3">
+      <path d="m696-80-56-56 84-84-84-84 56-56 84 84 84-84 56 56-83 84 83 84-56 56-84-83-84 83Zm-216 0q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 10-.5 20t-1.5 20h-81q2-10 2.5-20t.5-20q0-20-2.5-40t-7.5-40H654q3 20 4.5 40t1.5 40v20q0 10-1 20h-80q1-10 1-20v-20q0-20-1.5-40t-4.5-40H386q-3 20-4.5 40t-1.5 40q0 20 1.5 40t4.5 40h174v80H404q12 43 31 82.5t45 75.5q18 0 35.5-2t35.5-4l18 78q-23 5-44.5 7.5T480-80ZM170-400h136q-3-20-4.5-40t-1.5-40q0-20 1.5-40t4.5-40H170q-5 20-7.5 40t-2.5 40q0 20 2.5 40t7.5 40Zm34-240h118q9-37 22.5-72.5T376-782q-55 18-99 54.5T204-640Zm172 462q-18-34-31.5-69.5T322-320H204q29 51 73 87.5t99 54.5Zm28-462h152q-12-43-31-82.5T480-798q-26 36-45 75.5T404-640Zm234 0h118q-29-51-73-87.5T584-782q18 34 31.5 69.5T638-640Z"/>
+    </svg>
+  </div>
+</div>
+
+<div class="table-blur-container">
+
+  <div class="header-section-table">
+    <div>
+      <p style="margin-top: 0; margin-bottom: 0.2rem; color: #0f172a; font-size: 1.3rem;"><strong>Devices</strong></p>
+      <p style="font-size: 0.85rem; color: #64748b;">All the devices in your network</p>
+    </div>
+    <div class="filter-dropdown">
+      <button class="filter-btn">
+        Filter ▾
+      </button>
+
+      <div class="filter-menu">
+        <a href="/">All</a>
+        <a href="/?filter=online">Online</a>
+        <a href="/?filter=offline">Offline</a>
+        <a href="/?filter=unknown">Unrecognized</a>
+        <a href="/?filter=blocked">Blocked</a>
+      </div>
+    </div>
+  </div> 
+
+  <div class="table-container">
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th>Device IP</th>
+          <th>Description</th>
+          <th>Vendor</th>
+          <th>Status</th>
+          <th>MAC</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for device in devices %}
+        <tr>
+          <td>
+            {% if device.status == 'Offline'%}
+            <span class="status-offline"><strong>{{ device.ip }}</strong></span>
+            {% else %}
+            <strong>{{ device.ip }}</strong>
+            {% endif %}
+          </td>
+          <td>
+            {% if device.status == 'Offline'%}
+            <span class="status-offline">{{ device.description }}</span>
+            {% elif device.registered == False %}
+            <span style="color: red"> {{ device.description }} </span>
+            {% else %}
+            {{ device.description }}
+            {% endif %}
+          </td>
+          <td>
+            {% if device.status == 'Offline'%}
+            <span class="status-offline">{{ device.vendor }}</span>
+            {% else %}
+            {{ device.vendor }}
+            {% endif %}
+          </td>
+          <td>
+            {% if device.status == 'Online' %}
+            <span class="status status-online"><strong>Online</strong></span>
+            {% endif %}
+            {% if device.status == 'Offline' %}
+            <span class="status status-offline"><strong>Offline</strong></span>
+            {% endif %}
+            {% if device.status == 'Blocked' %}
+            <span class="status status-blocked"><strong>Blocked</strong></span>
+            {% endif %}
+          </td>
+          <td>
+            {% if device.status == 'Offline'%}
+            <span class="status-offline">{{ device.mac.upper() }}</span>
+            {% else %}
+            {{ device.mac.upper() }}
+            {% endif %}
+          </td> 
+          <td>
+            {% if device.registered == False %}
+            <a style="cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="red">
+                <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448ZM480-480Z"/>
+              </svg>
+            </a>
+            {% elif device.status == 'Blocked' %}
+            <a href="" style="cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="green">
+                <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+              </svg>
+            </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+{% endblock %}
