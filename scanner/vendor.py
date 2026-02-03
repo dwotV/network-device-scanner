@@ -1,12 +1,10 @@
-import requests
+from mac_vendor_lookup import MacLookup
+
+lookup = MacLookup()
+lookup.update_vendors()
 
 def get_vendor(mac):
     try:
-        url = f'https://api.macvendors.com/{mac}'
-        answered = requests.get(url)
-        if answered.status_code == 200:
-            return answered.text
-        else:
-            return 'Unknown'
+        return lookup.lookup(mac)
     except:
-        return 'Error to connect to the macvendors API'
+        return 'Unknown'

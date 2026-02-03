@@ -1,0 +1,12 @@
+[project]
+name = "network-device-scanner"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "flask>=3.1.2",
+    "flask-sqlalchemy>=3.1.1",
+    "mac-vendor-lookup>=0.1.15",
+    "scapy>=2.7.0",
+]
