@@ -1,6 +1,7 @@
 from scanner.scan import scan
 from datetime import datetime
 from scanner.network import network
+from block_device.blocker import start_block, stop_block
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for
 
@@ -28,24 +29,31 @@ def run_scan():
     for device in discovered_devices:
         mac = device['mac'].upper()
         scanned_macs.add(mac)
+        new_ip = device['ip']
 
         device_db = Device.query.filter_by(mac=mac).first()
-
+ 
         if device_db:
-            device_db.ip = device['ip']
-            device_db.status = 'Online'
+            if device_db.status == 'Blocked' and device_db.ip != new_ip:
+                stop_block(device_db.ip, mac)
+                start_block(new_ip, mac)
+
+            device_db.ip = new_ip
+            if device_db.status != 'Blocked':
+                device_db.status = 'Online'
             device_db.last_seen = datetime.utcnow()
         else:
             db.session.add(Device(
                 mac=mac,
-                ip=device['ip'],
+                ip=new_ip,
                 vendor=device['vendor'],
                 status='Online'
             ))
 
     if scanned_macs:
         Device.query.filter(
-            ~Device.mac.in_(scanned_macs)
+            ~Device.mac.in_(scanned_macs),
+            Device.status != 'Blocked'
         ).update(
             {Device.status: 'Offline'},
             synchronize_session=False
@@ -149,7 +157,19 @@ def update(mac):
 
 @app.route('/block/<mac>')
 def block(mac):
-    device_to_block = Device.query.get_or_404(mac)
+    device = Device.query.get_or_404(mac.upper())
+    if start_block(device.ip, device.mac):
+        device.status = 'Blocked'
+        db.session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/unblock/<mac>')
+def unblock(mac):
+    device = Device.query.get_or_404(mac.upper())
+    if stop_block(device.ip, device.mac):
+        device.status = 'Online'
+        db.session.commit()
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug = True)
