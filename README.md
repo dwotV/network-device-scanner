@@ -66,7 +66,7 @@ The project includes a **web dashboard** that allows:
 ### Dependencies
 
 ```bash
-pip install scapy flask mac-vendor-lookup
+pip install scapy flask flask-sqlalchemy mac-vendor-lookup
 ```
 
 ---
