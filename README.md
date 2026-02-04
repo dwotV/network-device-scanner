@@ -1,5 +1,7 @@
 # Network Device Scanner
 
+<img width="1922" height="1047" alt="Screenshot_2026-02-04_15-49-51" src="https://github.com/user-attachments/assets/a0a1b82a-79b6-4087-b67a-e14ed7b30ea5" />
+
 Network Device Scanner is a **Python-based network monitoring and control tool** that discovers devices connected to a local network, identifies their vendors using MAC addresses, detects unknown devices, and allows managing trusted and blocked devices through a **web interface**.
 
 The project is focused on **defensive security** and hands-on learning of networking fundamentals.
