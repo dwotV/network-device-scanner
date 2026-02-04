@@ -12,25 +12,16 @@
   </head>
   <body>
     {% block body %} {% endblock %}
-    
+
     <script>
       function openModal() {
-          document.getElementById("customModal").style.display = "block";
+        document.getElementById("customModal").style.display = "block";
       }
 
       function closeModal() {
-          document.getElementById("customModal").style.display = "none";
+        document.getElementById("customModal").style.display = "none";
       }
 
-      window.onclick = function(event) {
-          let modal = document.getElementById("customModal");
-          if (event.target == modal) {
-              closeModal();
-          }
-      }
-    </script>
-
-    <script>
       function openUpdateModal(mac, description) {
         const modal = document.getElementById('updateModal');
         const form = document.getElementById('updateForm');
@@ -45,25 +36,26 @@
       function closeUpdateModal() {
         document.getElementById('updateModal').style.display = 'none';
       }
-    </script> 
 
-    <script>
       function openAddModal(mac) {
-          document.getElementById("addModal").style.display = "block";
-          document.getElementById("addMac").value = mac;
+        document.getElementById("addModal").style.display = "block";
+        document.getElementById("addMac").value = mac;
       }
 
       function closeAddModal() {
-          document.getElementById("addModal").style.display = "none";
+        document.getElementById("addModal").style.display = "none";
       }
 
       window.onclick = function(event) {
-          let modal = document.getElementById("addModal");
-          if (event.target == modal) {
-              closeAddModal();
-          }
+        const customModal = document.getElementById("customModal");
+        const addModal = document.getElementById("addModal");
+        const updateModal = document.getElementById("updateModal");
+
+        if (event.target == customModal) closeModal();
+        if (event.target == addModal) closeAddModal();
+        if (event.target == updateModal) closeUpdateModal();
       }
     </script>
-
+    
   </body>
 </html>
