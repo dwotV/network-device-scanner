@@ -348,12 +348,57 @@ tr:hover td {
   padding: 10px 14px;
   color: #64748b;
   text-decoration: none;
+  margin: 5px;
 }
 
 .filter-menu a:hover {
-  background: #f9f9f9;
+  background: #5672e3;
+  color: white;
+  border-radius: 10px;
 }
 
 .filter-dropdown:hover .filter-menu {
   display: block;
+}
+
+/*ACTIONS BUTTON*/
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.actions-dropdown:hover .actions-menu {
+  display: block;
+}
+
+.actions-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #F6F4F3;
+  min-width: 160px;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.actions-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #64748b;
+  text-decoration: none;
+  margin: 5px;
+}
+
+.actions-menu a:hover {
+  background: #f9f9f9;
+  border-radius: 10px;
+}
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

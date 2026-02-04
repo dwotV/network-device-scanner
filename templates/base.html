@@ -45,6 +45,24 @@
       function closeUpdateModal() {
         document.getElementById('updateModal').style.display = 'none';
       }
+    </script> 
+
+    <script>
+      function openAddModal(mac) {
+          document.getElementById("addModal").style.display = "block";
+          document.getElementById("addMac").value = mac;
+      }
+
+      function closeAddModal() {
+          document.getElementById("addModal").style.display = "none";
+      }
+
+      window.onclick = function(event) {
+          let modal = document.getElementById("addModal");
+          if (event.target == modal) {
+              closeAddModal();
+          }
+      }
     </script>
 
   </body>
